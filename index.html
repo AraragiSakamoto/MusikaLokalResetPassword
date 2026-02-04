@@ -7,12 +7,7 @@
     <title>Reset Password - MusikaLokal</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
             background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
@@ -22,7 +17,6 @@
             justify-content: center;
             color: #F8FAFC;
         }
-
         .container {
             text-align: center;
             padding: 40px;
@@ -33,26 +27,9 @@
             border-radius: 24px;
             backdrop-filter: blur(10px);
         }
-
-        .logo {
-            font-size: 48px;
-            margin-bottom: 24px;
-        }
-
-        h1 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: #22C55E;
-        }
-
-        p {
-            font-size: 15px;
-            color: #94A3B8;
-            margin-bottom: 24px;
-            line-height: 1.6;
-        }
-
+        .logo { font-size: 48px; margin-bottom: 24px; }
+        h1 { font-size: 24px; font-weight: 700; margin-bottom: 16px; color: #22C55E; }
+        p { font-size: 15px; color: #94A3B8; margin-bottom: 24px; line-height: 1.6; }
         .btn {
             display: inline-block;
             padding: 16px 32px;
@@ -66,77 +43,37 @@
             margin: 8px;
             cursor: pointer;
             border: none;
+            width: 100%;
         }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.3);
-        }
-
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(34, 197, 94, 0.3); }
         .btn-secondary {
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: none;
-        }
-
-        .status {
-            margin-top: 20px;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        .status.info {
-            background: rgba(59, 130, 246, 0.2);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            color: #60A5FA;
-        }
-
-        .status.success {
-            background: rgba(34, 197, 94, 0.2);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            color: #4ADE80;
-        }
-
-        .status.error {
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #F87171;
-        }
-
-        .hidden {
-            display: none;
-        }
-
+        .status { margin-top: 20px; padding: 12px; border-radius: 8px; font-size: 14px; }
+        .status.info { background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.3); color: #60A5FA; }
+        .status.error { background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.3); color: #F87171; }
+        .hidden { display: none; }
         .spinner {
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             border: 3px solid rgba(255, 255, 255, 0.1);
             border-top-color: #22C55E;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin: 20px auto;
         }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .manual-section {
-            margin-top: 24px;
-            padding-top: 24px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .manual-section p {
-            font-size: 13px;
-            margin-bottom: 12px;
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .manual-section { margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        .manual-section p { font-size: 13px; margin-bottom: 12px; }
+        .expo-input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            margin-bottom: 8px;
+            font-family: inherit;
         }
     </style>
 </head>
@@ -153,16 +90,12 @@
         
         <div id="content" class="hidden">
             <p>Click the button below to open the app and reset your password.</p>
-            
-            <button class="btn" onclick="openApp()">
-                Open MusikaLokal App
-            </button>
+            <button class="btn" onclick="openApp()">Open MusikaLokal App</button>
             
             <div class="manual-section">
-                <p>If the app doesn't open automatically, make sure MusikaLokal is installed on your device.</p>
-                <a href="https://play.google.com/store" class="btn btn-secondary" target="_blank">
-                    Get the App
-                </a>
+                <p>For Development (Expo Go):</p>
+                <input type="text" id="expoUrl" class="expo-input" placeholder="exp://192.168.x.x:8082">
+                <button onclick="openExpo()" class="btn btn-secondary">Open in Expo Go</button>
             </div>
         </div>
         
@@ -170,30 +103,13 @@
     </div>
 
     <script>
-        // Get URL parameters from hash fragment (Supabase puts tokens there)
         function getHashParams() {
             const hash = window.location.hash.substring(1);
-            const params = new URLSearchParams(hash);
-            return {
-                access_token: params.get('access_token'),
-                refresh_token: params.get('refresh_token'),
-                type: params.get('type'),
-                error: params.get('error'),
-                error_description: params.get('error_description')
-            };
+            return new URLSearchParams(hash);
         }
 
-        // Get URL parameters from query string
         function getQueryParams() {
-            const params = new URLSearchParams(window.location.search);
-            return {
-                access_token: params.get('access_token'),
-                refresh_token: params.get('refresh_token'),
-                type: params.get('type'),
-                token: params.get('token'),
-                error: params.get('error'),
-                error_description: params.get('error_description')
-            };
+            return new URLSearchParams(window.location.search);
         }
 
         function showStatus(message, type) {
@@ -208,95 +124,58 @@
             document.getElementById('content').classList.remove('hidden');
         }
 
-        // Build the app deep link URL
-        function buildAppUrl(params) {
-            const baseUrl = 'musikalokal://change_password';
-            const queryParams = new URLSearchParams();
-            
-            if (params.access_token) queryParams.set('access_token', params.access_token);
-            if (params.refresh_token) queryParams.set('refresh_token', params.refresh_token);
-            if (params.type) queryParams.set('type', params.type);
-            
-            const queryString = queryParams.toString();
-            return queryString ? `${baseUrl}?${queryString}` : baseUrl;
-        }
+        // Get tokens from URL (Supabase puts them in hash fragment)
+        const hashParams = getHashParams();
+        const queryParams = getQueryParams();
+        
+        const accessToken = hashParams.get('access_token') || queryParams.get('access_token');
+        const refreshToken = hashParams.get('refresh_token') || queryParams.get('refresh_token');
+        const type = hashParams.get('type') || queryParams.get('type') || 'recovery';
+        const error = hashParams.get('error') || queryParams.get('error');
 
-        // Build Expo Go URL for development
-        function buildExpoUrl(params) {
-            // This will need to be updated with actual Expo dev server address
-            const baseUrl = 'exp://192.168.100.162:8082/--/change_password';
-            const queryParams = new URLSearchParams();
-            
-            if (params.access_token) queryParams.set('access_token', params.access_token);
-            if (params.refresh_token) queryParams.set('refresh_token', params.refresh_token);
-            if (params.type) queryParams.set('type', params.type);
-            
-            const queryString = queryParams.toString();
-            return queryString ? `${baseUrl}?${queryString}` : baseUrl;
+        function buildAppUrl() {
+            const params = new URLSearchParams();
+            if (accessToken) params.set('access_token', accessToken);
+            if (refreshToken) params.set('refresh_token', refreshToken);
+            params.set('type', type);
+            return 'musikalokal://change_password?' + params.toString();
         }
-
-        let appUrl = '';
-        let expoUrl = '';
 
         function openApp() {
-            // Try custom scheme first, then Expo
-            window.location.href = appUrl;
+            window.location.href = buildAppUrl();
+        }
+
+        function openExpo() {
+            const input = document.getElementById('expoUrl');
+            let url = input.value.trim();
+            if (!url) return alert('Enter your Expo URL (e.g., exp://192.168.100.162:8082)');
             
-            // If custom scheme doesn't work, try Expo after a delay
+            if (!url.startsWith('exp://')) url = 'exp://' + url;
+            if (!url.includes('/--/')) url += '/--/';
+            
+            const params = new URLSearchParams();
+            if (accessToken) params.set('access_token', accessToken);
+            if (refreshToken) params.set('refresh_token', refreshToken);
+            params.set('type', type);
+            
+            window.location.href = url + 'change_password?' + params.toString();
+        }
+
+        // On page load
+        if (error) {
+            showContent();
+            showStatus('Error: ' + (hashParams.get('error_description') || error), 'error');
+        } else if (accessToken) {
+            // Try auto-redirect
+            setTimeout(() => { window.location.href = buildAppUrl(); }, 500);
             setTimeout(() => {
-                window.location.href = expoUrl;
-            }, 1000);
-        }
-
-        function init() {
-            // Get params from both hash and query
-            const hashParams = getHashParams();
-            const queryParams = getQueryParams();
-            
-            // Merge params (hash takes priority as that's where Supabase puts auth tokens)
-            const params = {
-                access_token: hashParams.access_token || queryParams.access_token,
-                refresh_token: hashParams.refresh_token || queryParams.refresh_token,
-                type: hashParams.type || queryParams.type || 'recovery',
-                error: hashParams.error || queryParams.error,
-                error_description: hashParams.error_description || queryParams.error_description
-            };
-
-            console.log('Password reset params:', params);
-
-            // Check for errors
-            if (params.error) {
                 showContent();
-                showStatus(params.error_description || params.error, 'error');
-                return;
-            }
-
-            // Build app URLs
-            appUrl = buildAppUrl(params);
-            expoUrl = buildExpoUrl(params);
-            
-            console.log('App URL:', appUrl);
-            console.log('Expo URL:', expoUrl);
-
-            // Try to open the app automatically
-            if (params.access_token) {
-                // Try opening with custom scheme
-                window.location.href = appUrl;
-                
-                // Show manual buttons after a delay if redirect doesn't work
-                setTimeout(() => {
-                    showContent();
-                    showStatus('If the app did not open, tap the button above.', 'info');
-                }, 2000);
-            } else {
-                showContent();
-                showStatus('Invalid or expired reset link. Please request a new one.', 'error');
-            }
+                showStatus('If the app did not open, tap the button above.', 'info');
+            }, 2000);
+        } else {
+            showContent();
+            showStatus('Invalid or expired reset link. Please request a new one.', 'error');
         }
-
-        // Run on page load
-        window.onload = init;
     </script>
 </body>
-
 </html>
